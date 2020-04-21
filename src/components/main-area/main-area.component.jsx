@@ -6,6 +6,7 @@ import SearchBox from './SearchBox';
 class MainArea extends Component {
     constructor(props){
         super(props);
+        //state: object that describes the application
         this.state= {
             countries: [],
             searchField: '',
@@ -13,9 +14,6 @@ class MainArea extends Component {
         }
     }
 
-    onSearchChange(event){
-        console.log(event.target.value);
-    }
 
     // Getting the data from the Covid API and saving it into our app component
     async componentDidMount(){
@@ -26,8 +24,27 @@ class MainArea extends Component {
             countries: data,
             isLoaded: true
             })
-        // console.log(data.Global);
+        console.log(data);
+  
     }
+
+    //Working with the SearchBox event
+    onSearchChange = (event) => {
+        //console.log(event.target.value);
+        this.setState({ searchField: event.target.value })
+
+        // this.state.countries.Countries[0]
+        //const filteredCountry = this.state.countries.Countries;
+        // console.log(filteredCountry);
+        const filteredCountry = this.state.countries.Countries
+            .filter(name => {
+                return name.Country.toLowerCase().includes(this.state.searchField.toLowerCase());
+            })
+        console.log(filteredCountry);
+        
+        
+    }
+
 
     render() {
         const {countries, searchField,isLoaded} = this.state;
