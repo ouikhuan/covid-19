@@ -5,13 +5,12 @@ import Header from './components/header/header.component';
 import Homepage from './pages/homepage/homepage.component';
 import MapPage from './pages/map/map.component';
 import AboutPage from './pages/about/about.component';
-import MainArea from './components/main-area/main-area.component';
 import './App.css';
 
 // npm install react-particles-js
 import Particles from 'react-particles-js';
 import 'tachyons';
-import '../node_modules/font-awesome/css/font-awesome.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 
 //Working with the background
@@ -40,7 +39,7 @@ const particleOptions = {
         mode: 'repulse'
       }
     }
-    
+
   }
 }
 
