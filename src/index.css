@@ -11,8 +11,10 @@ code {
 
 .main_title{
   color: #9EA738;
-  font-size: 2rem;
-  
+}
+
+.subtitle{
+  color: #9EA738;
 }
 
 .search_container{
@@ -47,5 +49,23 @@ code {
   font-size: 25px;
   color:white;
   margin-right: 5px;
+  cursor: pointer;
 
+}
+
+/* Total statistic section */
+
+.stat_main_container {
+  display: flex;
+
+}
+
+
+.stat_main_container div {
+  flex-grow: 1;
+  flex-direction: column;
+  border-color: #806015;
+  box-sizing: border-box;
+  width: 100%;
+  
 }
