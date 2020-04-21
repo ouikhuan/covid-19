@@ -5,7 +5,7 @@ import Header from './components/header/header.component';
 import Homepage from './pages/homepage/homepage.component';
 import MapPage from './pages/map/map.component';
 import AboutPage from './pages/about/about.component';
-import './App.css';
+import './App.scss';
 
 // npm install react-particles-js
 import Particles from 'react-particles-js';
@@ -24,11 +24,11 @@ const particleOptions = {
       }
     },
     color:{
-      value: "#AA8939"
+      value: "#7ebdb4"
     },
     line_linked:{
       enable: true,
-      color: "#AA8939"
+      color: "#7ebdb4"
     }
   },
   interactivity:{

@@ -24,16 +24,24 @@ class LeftPanel extends React.Component{
     render(){
         const {countries} = this.props;
         const dataSet = {
-            labels: countries.map(country=>country.countryName),
+            labels: countries.map(country=>country.countryCode),
             datasets:[
                 {
+                    label: "Total confirmed",
                     data: countries.map(country=>country.totalConfirmed) ,
+                    backgroundColor: "#f4a548",
+                },
+                {
+                    label: "Total deaths",
+                    data: countries.map(country=>country.totalDeaths) ,
+                    backgroundColor: "#f6d198",
+
                 }
             ]
         };
 
         return (
-            <div className='left-panel ba1 b--solid b--dark-gray'>
+            <div className='left-panel'>
                 <HorizontalBar data={dataSet} options={options}/>
             </div>
         );
