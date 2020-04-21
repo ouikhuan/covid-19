@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import SearchBox from './SearchBox';
+
 
 
 class MainArea extends Component {
@@ -6,8 +8,13 @@ class MainArea extends Component {
         super(props);
         this.state= {
             countries: [],
+            searchField: '',
             isLoaded: false,
         }
+    }
+
+    onSearchChange(event){
+        console.log(event.target.value);
     }
 
     // Getting the data from the Covid API and saving it into our app component
@@ -23,7 +30,7 @@ class MainArea extends Component {
     }
 
     render() {
-        const {countries, isLoaded} = this.state;
+        const {countries, searchField,isLoaded} = this.state;
 
         if (!isLoaded){
             return <div>Loading...</div>;
@@ -34,12 +41,7 @@ class MainArea extends Component {
                     <div className="tc f1 b main_title ma1">Country Name</div>
 
                     {/* Input form */}
-                    <div className="search_container tc center">
-                        <div className=' pa2 ma2 center search_small_container'>
-                            <input className="" type="text" placeholder="Enter Country"/>
-                            <i className='ml2 fa fa-search'></i>
-                        </div>
-                    </div>
+                    <SearchBox searchChange={this.onSearchChange}/>
 
                     {/* Total statistic section */}
                     <div className="mv2 tc stat_main_container w-100 b">
