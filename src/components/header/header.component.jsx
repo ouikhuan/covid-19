@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import './header.styles.css';
+import './header.styles.scss';
 
 const Header = () => (
     <header id="header" className='overflow-hidden'>

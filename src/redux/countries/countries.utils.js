@@ -2,6 +2,7 @@ export const convertToChartData = (countries)=>{
     return sortCountriesByTotalConfirmed(countries.map(
         country=> ({
             countryName:country.Country,
+            countryCode:country.CountryCode,
             totalConfirmed:country.TotalConfirmed,
             totalDeaths:country.TotalDeaths,
         }))).slice(0,10);
