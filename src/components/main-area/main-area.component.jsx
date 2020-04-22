@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SearchBox from './SearchBox';
-
+import Cards from './Cards';
 
 
 class MainArea extends Component {
@@ -11,6 +11,9 @@ class MainArea extends Component {
             countries: [],
             searchField: '',
             isLoaded: false,
+            totalConfirmed: '',
+            totalRecovered: '',
+            totalDeaths: ''
         }
     }
 
@@ -24,7 +27,7 @@ class MainArea extends Component {
             countries: data,
             isLoaded: true
             })
-        console.log(data);
+        //console.log(data);
   
     }
 
@@ -32,64 +35,37 @@ class MainArea extends Component {
     onSearchChange = (event) => {
         //console.log(event.target.value);
         this.setState({ searchField: event.target.value })
-
-        // this.state.countries.Countries[0]
-        //const filteredCountry = this.state.countries.Countries;
-        // console.log(filteredCountry);
         const filteredCountry = this.state.countries.Countries
             .filter(name => {
                 return name.Country.toLowerCase().includes(this.state.searchField.toLowerCase());
             })
         console.log(filteredCountry);
         
-        
     }
 
+    //Working with the Card component
+    updateCard = (filteredCountry) => {
+        const totalConfirmed = filteredCountry;
+        this.setState({
+            totalConfirmed: totalConfirmed
+        })
+        console.log(totalConfirmed);
+    }
+
+    
 
     render() {
         const {countries, searchField,isLoaded} = this.state;
-
+        updateCard(filteredCountry);
         if (!isLoaded){
             return <div>Loading...</div>;
         }else{
-
             return (
                 <div className='main-area'>
-                    <div className="tc f1 b main_title ma1">Country Name</div>
-
-                    {/* Input form */}
+                    <div className="tc f1 b main_title ma1">this.filteredCountry</div>
                     <SearchBox searchChange={this.onSearchChange}/>
-
-                    {/* Total statistic section */}
-                    <div className="mv2 tc stat_main_container w-100 b">
-
-                        <div className="grow ba bw2 br3 ma1 shadow-5">
-                            <p className='f2 center subtitle'>
-                                {'Contagious'}
-                            </p>
-                            <h2>{countries.Global.TotalConfirmed}</h2>
-                        </div>
-
-                        <div className="grow ba bw2 br3 ma1 shadow-5">
-                            <p className='f2 center subtitle'>
-                                {'Recovered'}
-                            </p>
-                            <h2>{countries.Global.TotalRecovered}</h2>
-                        </div>
-
-                        <div className="grow ba bw2 br3 ma1 shadow-5">
-                            <p className='f2 center subtitle'>
-                                {'Deaths'}
-                            </p>
-                            <h2>{countries.Global.TotalDeaths}</h2>
-                        </div>
-
-                    </div>
-
+                    <Cards updateCardTotalConfirmed={this.state.totalConfirmed}/>
                 </div>
-
-
-
             )
         }
     }
