@@ -28,7 +28,7 @@ class MainArea extends Component {
             isLoaded: true
             })
         //console.log(data);
-  
+
     }
 
     //Working with the SearchBox event
@@ -37,26 +37,31 @@ class MainArea extends Component {
         this.setState({ searchField: event.target.value })
         const filteredCountry = this.state.countries.Countries
             .filter(name => {
-                return name.Country.toLowerCase().includes(this.state.searchField.toLowerCase());
+                return name.Country.toLowerCase() === event.target.value.toLowerCase();
             })
-        console.log(filteredCountry);
-        
+
+        if(filteredCountry.length){
+            this.updateCard(filteredCountry[0]);
+        }
+
     }
 
     //Working with the Card component
     updateCard = (filteredCountry) => {
-        const totalConfirmed = filteredCountry;
+        console.log('run here',filteredCountry);
+        const {TotalConfirmed,TotalDeaths,TotalRecovered} = filteredCountry;
         this.setState({
-            totalConfirmed: totalConfirmed
+            totalConfirmed: TotalConfirmed,
+            totalRecovered: TotalRecovered,
+            totalDeaths: TotalDeaths
         })
-        console.log(totalConfirmed);
     }
 
-    
+
 
     render() {
         const {countries, searchField,isLoaded} = this.state;
-        updateCard(filteredCountry);
+
         if (!isLoaded){
             return <div>Loading...</div>;
         }else{
