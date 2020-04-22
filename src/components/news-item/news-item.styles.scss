@@ -1,0 +1,21 @@
+.news-item-container{
+    margin:20px 10px;
+    padding:10px;
+    border:1px solid #7ebdb4;
+
+    &:hover{
+        opacity: .9;
+    }
+    a {
+        display: flex;
+        color:white;
+
+        &:hover{
+            color:#7ebdb4;
+        }
+    }
+    img{
+        width: 150px;
+        margin-right:10px;
+    }
+}
