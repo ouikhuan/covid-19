@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import SearchBox from './SearchBox';
-import Cards from './Cards';
+import Title from '../title/Title';
+import SearchBox from '../searchbox/SearchBox';
+import Cards from '../cards/Cards';
 
 
 class MainArea extends Component {
@@ -11,6 +12,7 @@ class MainArea extends Component {
             countries: [],
             searchField: '',
             isLoaded: false,
+            countryName: '',
             totalConfirmed: '',
             totalRecovered: '',
             totalDeaths: ''
@@ -39,7 +41,7 @@ class MainArea extends Component {
             .filter(name => {
                 return name.Country.toLowerCase() === event.target.value.toLowerCase();
             })
-
+        
         if(filteredCountry.length){
             this.updateCard(filteredCountry[0]);
         }
@@ -49,15 +51,16 @@ class MainArea extends Component {
     //Working with the Card component
     updateCard = (filteredCountry) => {
         console.log('run here',filteredCountry);
-        const {TotalConfirmed,TotalDeaths,TotalRecovered} = filteredCountry;
+        const {Country, TotalConfirmed,TotalDeaths,TotalRecovered} = filteredCountry;
         this.setState({
+            countryName: Country,
             totalConfirmed: TotalConfirmed,
             totalRecovered: TotalRecovered,
             totalDeaths: TotalDeaths
         })
     }
 
-
+    
 
     render() {
         const {countries, searchField,isLoaded} = this.state;
@@ -67,9 +70,11 @@ class MainArea extends Component {
         }else{
             return (
                 <div className='main-area'>
-                    <div className="tc f1 b main_title ma1">this.filteredCountry</div>
+                    <Title updateTitle={this.state.countryName}/>
                     <SearchBox searchChange={this.onSearchChange}/>
-                    <Cards updateCardTotalConfirmed={this.state.totalConfirmed}/>
+                    <Cards updateCardTotalConfirmed={this.state.totalConfirmed}
+                        updateCardTotalRecovered={this.state.totalRecovered}
+                        updateCardTotalDeaths={this.state.totalDeaths}/>
                 </div>
             )
         }

@@ -1,10 +1,11 @@
 .option{
     //background-color: ;
     color:white;
-    &:hover{
-        color:white;
-    }
+
     &:visited{
         color: white;
+    }
+    &:hover{
+        color: #7ebdb4;
     }
 }
