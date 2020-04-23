@@ -44,6 +44,8 @@ class MainArea extends Component {
 
         if(filteredCountry.length){
             this.updateCard(filteredCountry[0]);
+            const FinalCountryChoosen = filteredCountry[0].Country;
+            console.log('FinalCountryChoosen', FinalCountryChoosen)
         }
     }
 
@@ -79,7 +81,7 @@ class MainArea extends Component {
                     <Cards updateCardTotalConfirmed={this.state.totalConfirmed}
                         updateCardTotalRecovered={this.state.totalRecovered}
                         updateCardTotalDeaths={this.state.totalDeaths}/>
-                    <TimeSeries updateTitle={this.state.countryName}/>
+                    <TimeSeries updateTitle={this.onSearchChange}/>
                 </div>
             )
         }

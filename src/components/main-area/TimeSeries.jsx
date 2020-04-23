@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { Line } from 'react-chartjs-2';
 
 
+//<TimeSeries updateTitle={this.state.countryName}/>
+
 class TimeSeries extends Component{
     constructor(props){
         super(props);
@@ -11,23 +13,45 @@ class TimeSeries extends Component{
                 labels:[],
                 datasets:[
                     {
-                        
                         data:[],
-                        backgroundColor:[
+                        borderColor:[
                             '#f4a548'
-                        ]
+                        ],
+                        fill: false,
+                        borderWidth:2
                     }
                 ]
             },
-            isLoaded: false
+            isLoaded: false,
+            countryName: ''
             
         }
+        // console.log("PAIS RECIBIDO", this.props.updateTitle)
     }
 
+    // Getting the country searched
+    gettingCountrySearched = () => {
+        console.log("updateTitle",this.props.updateTitle)
+        return 'peru'
+        
+        // console.log("Nombre del PAIS",this.props.updateTitle)
+        // this.setState({
+        //     countryName: this.props.updateTitle
+        // },
+        // ()=>{
+            
+        // })
+        
+        
+    }
+    //matching the URL country with the one searched
+    //adding the country to the final link to fetch
+    /*********************************************/
     // Getting the data from the Covid API and saving it into our app component
     //https://api.covid19api.com/dayone/country/south-africa/status/confirmed/live
     async componentDidMount(){
-        const url = 'https://api.covid19api.com/dayone/country/south-africa/status/confirmed/live';
+        const nombrePais = this.gettingCountrySearched()
+        const url = `https://api.covid19api.com/dayone/country/${nombrePais}/status/confirmed/live`;
         const response = await fetch(url);
         const data = await response.json();
         // console.log("Datos Confirmados", data[0].Cases)
@@ -36,10 +60,10 @@ class TimeSeries extends Component{
             isLoaded: true
             })
         this.updateState()
+        // this.gettingCountrySearched()
     }
 
-    //matching the URL country with the one searched
-    /*********************************************/
+    
     
 
     //Fetching the Date of each day
@@ -99,10 +123,30 @@ class TimeSeries extends Component{
                             display:true,
                             text: 'Total Cases Confirmed',
                             fontSize: 25,
-                            fontColor: '#ffffff',
+                            fontColor: '#ffffff'
                         },
                         legend:{
                             display:false
+                        },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    fontColor:'#ffffff'
+                                },
+                                gridLines:{
+                                    display:false
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    fontColor:'#ffffff'
+                                }
+                            }]
+                        },
+                        plugins: {
+                            datalabels: {
+                                display: false,
+                            },
                         }
                       }}
                     />
