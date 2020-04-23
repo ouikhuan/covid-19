@@ -14,6 +14,10 @@ export const getScaleAndColorByNumber = (number) => {
             scale = 20;
             color = '#f58c41';
             break;
+        case (number > 100000 && number <= 200000):
+            scale = 30;
+            color = '#f5812f';
+            break;
         case (number > 200000 && number <= 300000):
             scale = 40;
             color = '#f58434';
