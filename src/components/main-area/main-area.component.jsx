@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Title from '../title/Title';
 import SearchBox from '../searchbox/SearchBox';
 import Cards from '../cards/Cards';
-
+import TimeSeries from './TimeSeries';
 
 class MainArea extends Component {
     constructor(props){
@@ -45,8 +45,10 @@ class MainArea extends Component {
         if(filteredCountry.length){
             this.updateCard(filteredCountry[0]);
         }
-
     }
+
+    clearSearchField = () => {this.setState({searchField:''})}
+
 
     //Working with the Card component
     updateCard = (filteredCountry) => {
@@ -57,6 +59,7 @@ class MainArea extends Component {
             totalConfirmed: TotalConfirmed,
             totalRecovered: TotalRecovered,
             totalDeaths: TotalDeaths
+            
         })
     }
 
@@ -71,10 +74,12 @@ class MainArea extends Component {
             return (
                 <div className='main-area'>
                     <Title updateTitle={this.state.countryName}/>
-                    <SearchBox searchChange={this.onSearchChange}/>
+                    <SearchBox searchChange={this.onSearchChange}
+                        clearField={this.clearSearchField}/>
                     <Cards updateCardTotalConfirmed={this.state.totalConfirmed}
                         updateCardTotalRecovered={this.state.totalRecovered}
                         updateCardTotalDeaths={this.state.totalDeaths}/>
+                    <TimeSeries />
                 </div>
             )
         }
