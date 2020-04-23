@@ -35,11 +35,7 @@ class TimeSeries extends Component{
             mainDataBase: data,
             isLoaded: true
             })
-
-        
         this.updateState()
-        
-        
     }
 
     //matching the URL country with the one searched
@@ -56,8 +52,6 @@ class TimeSeries extends Component{
         })
 
         //console.log('this is total dates',dateDay)
-
-
     }
 
     //Fetching the Total cases confirmed per day
@@ -68,9 +62,7 @@ class TimeSeries extends Component{
             //console.log('Each Case',element.Cases);
             return element.Cases;
         })
-        
         //console.log('this is total cases per day',caseDay)
-
     }
 
     //Updating the state
@@ -87,8 +79,6 @@ class TimeSeries extends Component{
                     data: finalData
                 }]
             }
-            
-            
         })
         console.log(finalLabels);
         console.log("FINAL DATA",finalData);
