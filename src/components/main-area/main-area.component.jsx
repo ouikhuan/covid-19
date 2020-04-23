@@ -41,7 +41,7 @@ class MainArea extends Component {
             .filter(name => {
                 return name.Country.toLowerCase() === event.target.value.toLowerCase();
             })
-        
+
         if(filteredCountry.length){
             this.updateCard(filteredCountry[0]);
         }
@@ -59,11 +59,11 @@ class MainArea extends Component {
             totalConfirmed: TotalConfirmed,
             totalRecovered: TotalRecovered,
             totalDeaths: TotalDeaths
-            
+
         })
     }
 
-    
+
 
     render() {
         const {countries, searchField,isLoaded} = this.state;
@@ -75,7 +75,7 @@ class MainArea extends Component {
                 <div className='main-area'>
                     <Title updateTitle={this.state.countryName}/>
                     <SearchBox searchChange={this.onSearchChange}
-                        clearField={this.clearSearchField}/>
+                        clearField={this.clearSearchField} searchValue={this.state.searchField} />
                     <Cards updateCardTotalConfirmed={this.state.totalConfirmed}
                         updateCardTotalRecovered={this.state.totalRecovered}
                         updateCardTotalDeaths={this.state.totalDeaths}/>
