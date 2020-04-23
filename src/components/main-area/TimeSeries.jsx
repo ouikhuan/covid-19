@@ -11,7 +11,7 @@ class TimeSeries extends Component{
                 labels:[],
                 datasets:[
                     {
-                        label: 'Confirmed',
+                        
                         data:[],
                         backgroundColor:[
                             '#f4a548'
@@ -35,15 +35,11 @@ class TimeSeries extends Component{
             mainDataBase: data,
             isLoaded: true
             })
-        // console.log("Esto el es dataBase",this.state.mainDataBase);
-        const finalLabels = this.feedDataDateGraph();
-        const finalData = this.feedDataCasesGraph();
-        //console.log(finalLabels);
 
-        this.setState({
-            labels: finalLabels,
-            data: finalData
-        })
+        
+        this.updateState()
+        
+        
     }
 
     //matching the URL country with the one searched
@@ -54,7 +50,7 @@ class TimeSeries extends Component{
     feedDataDateGraph = () => {
 
         // fetching Date
-        const dateDay = this.state.mainDataBase.map((element)=>{
+        return this.state.mainDataBase.map((element)=>{
             //console.log('Each Date',element.Date);
             return element.Date.substring(6,10);
         })
@@ -68,13 +64,36 @@ class TimeSeries extends Component{
     feedDataCasesGraph = () => {
 
         // fetching Cases per day
-        const caseDay = this.state.mainDataBase.map((element)=>{
-            //console.log('Each Date',element.Date);
+        return this.state.mainDataBase.map((element)=>{
+            //console.log('Each Case',element.Cases);
             return element.Cases;
         })
         
         //console.log('this is total cases per day',caseDay)
 
+    }
+
+    //Updating the state
+    updateState = () => {
+        // console.log("Esto el es dataBase",this.state.mainDataBase);
+        const finalLabels = this.feedDataDateGraph();
+        const finalData = this.feedDataCasesGraph();
+        //console.log(finalLabels);
+
+        this.setState({
+            chartData:{
+                labels: finalLabels,
+                datasets:[{
+                    data: finalData
+                }]
+            }
+            
+            
+        })
+        console.log(finalLabels);
+        console.log("FINAL DATA",finalData);
+        console.log("LABELS",this.state.chartData.labels);
+        console.log("DATA",this.state.chartData.datasets);
     }
 
 
@@ -85,7 +104,16 @@ class TimeSeries extends Component{
                     data={this.state.chartData}
                     options={{
                         responsive: true,
-                        maintainAspectRatio: true
+                        maintainAspectRatio: true,
+                        title:{
+                            display:true,
+                            text: 'Total Cases Confirmed',
+                            fontSize: 25,
+                            fontColor: '#ffffff',
+                        },
+                        legend:{
+                            display:false
+                        }
                       }}
                     />
             </div>
