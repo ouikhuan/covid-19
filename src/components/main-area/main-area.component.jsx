@@ -79,7 +79,7 @@ class MainArea extends Component {
                     <Cards updateCardTotalConfirmed={this.state.totalConfirmed}
                         updateCardTotalRecovered={this.state.totalRecovered}
                         updateCardTotalDeaths={this.state.totalDeaths}/>
-                    <TimeSeries />
+                    <TimeSeries updateTitle={this.state.countryName}/>
                 </div>
             )
         }
