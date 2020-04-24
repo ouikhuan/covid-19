@@ -20,9 +20,9 @@ class RightPanel extends React.Component{
         this.fetchNewsData();
     }
 
-    fetchNewsData = ()=>{
+    fetchNewsData = async ()=>{
         const {updateNewsData} = this.props;
-        axios.get(`https://cryptic-ravine-96718.herokuapp.com/`)
+        await axios.get(`https://cryptic-ravine-96718.herokuapp.com/`)
         .then(response => {
             const newsData = response.data.news;
             updateNewsData(newsData);

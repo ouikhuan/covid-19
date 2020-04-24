@@ -24,7 +24,7 @@ class TimeSeries extends Component{
             },
             isLoaded: false,
             countryName: ''
-            
+
         }
         // console.log("PAIS RECIBIDO", this.props.updateTitle)
     }
@@ -33,16 +33,16 @@ class TimeSeries extends Component{
     gettingCountrySearched = () => {
         console.log("DB",this.props.mainDataBase)
         //return 'peru'
-        
+
         // console.log("Nombre del PAIS",this.props.updateTitle)
         // this.setState({
         //     countryName: this.props.updateTitle
         // },
         // ()=>{
-            
+
         // })
-    }   
-        
+    }
+
     // }
     //matching the URL country with the one searched
     //adding the country to the final link to fetch
@@ -51,32 +51,14 @@ class TimeSeries extends Component{
     //https://api.covid19api.com/dayone/country/south-africa/status/confirmed/live
 
 
-    
-    
+
+
 
     //Fetching the Date of each day
-    feedDataDateGraph = () => {
-        if(this.props.mainDataBase.length){
-            const dateBay = this.props.mainDataBase.map((element)=>{
-                return element.Date.substring(6,10);
-            })
-        }
-        // fetching Date
-        
-
-        console.log('this is total dates',this.dateDay)
-    }
+    feedDataDateGraph = data => data.map((element)=>element.Date.substring(6,10));
 
     //Fetching the Total cases confirmed per day
-    feedDataCasesGraph = () => {
-
-        // fetching Cases per day
-        return this.props.mainDataBase.map((element)=>{
-            //console.log('Each Case',element.Cases);
-            return element.Cases;
-        })
-        //console.log('this is total cases per day',caseDay)
-    }
+    feedDataCasesGraph = data => data.map((element)=> element.Cases);
 
     //Updating the state
     updateState = () => {
@@ -102,14 +84,29 @@ class TimeSeries extends Component{
 
 
     render(){
-        if(this.props.mainDataBase.length){
-        console.log("DB1",this.props.mainDataBase)
+
+        const {mainDataBase} = this.props;
+        const datesData = this.feedDataDateGraph(mainDataBase);
+        const casesData = this.feedDataCasesGraph(mainDataBase);
+        const chartData = {
+            labels: datesData,
+            datasets:[
+                {
+                    label: "Total confirmed",
+                    data: casesData,
+                    borderColor:[
+                        '#f4a548'
+                    ],
+                    fill: false,
+                    borderWidth:2
+                }
+            ]
         }
-        this.feedDataDateGraph()
+
         return(
             <div className="chart">
                 <Line
-                    data={this.state.chartData}
+                    data={chartData}
                     options={{
                         responsive: true,
                         maintainAspectRatio: true,

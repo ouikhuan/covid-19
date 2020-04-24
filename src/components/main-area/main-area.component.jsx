@@ -46,28 +46,30 @@ class MainArea extends Component {
 
         if(filteredCountry.length){
             this.updateCard(filteredCountry[0]);
-            const FinalCountryChoosen = filteredCountry[0].Country;
-            console.log('FinalCountryChoosen', FinalCountryChoosen)
-            
-            if(FinalCountryChoosen){
-                this.gettingCountrySearched(FinalCountryChoosen)
+            const finalCountryChoosen = filteredCountry[0].Country;
+            console.log('finalCountryChoosen', finalCountryChoosen)
+
+            if(finalCountryChoosen){
+                this.gettingCountrySearched(finalCountryChoosen)
             }
-            
-            }
-            
+
         }
-    
+
+    }
 
 
-    async gettingCountrySearched(FinalCountryChoosen){
-        const url = `https://api.covid19api.com/dayone/country/${FinalCountryChoosen}/status/confirmed/live`;
+
+    async gettingCountrySearched(finalCountryChoosen){
+        //const url = `https://api.covid19api.com/dayone/country/${finalCountryChoosen}/status/confirmed/live`;
+        const url = `https://api.covid19api.com/total/dayone/country/${finalCountryChoosen}/status/confirmed`;
+
         const response = await fetch(url);
         const data = await response.json();
         console.log("Datos Confirmados", data)
         this.setState({
             mainDataBase: data,
             isLoaded2: true
-            })
+        })
         console.log("MAIN DATA BASE",this.state.mainDataBase)
     }
 
