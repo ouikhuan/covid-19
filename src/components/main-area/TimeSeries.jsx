@@ -8,7 +8,7 @@ class TimeSeries extends Component{
     constructor(props){
         super(props);
         this.state = {
-            mainDataBase: [],
+            // mainDataBase: [],
             chartData: {
                 labels:[],
                 datasets:[
@@ -31,8 +31,8 @@ class TimeSeries extends Component{
 
     // Getting the country searched
     gettingCountrySearched = () => {
-        console.log("updateTitle",this.props.updateTitle)
-        return 'peru'
+        console.log("DB",this.props.mainDataBase)
+        //return 'peru'
         
         // console.log("Nombre del PAIS",this.props.updateTitle)
         // this.setState({
@@ -41,48 +41,37 @@ class TimeSeries extends Component{
         // ()=>{
             
         // })
+    }   
         
-        
-    }
+    // }
     //matching the URL country with the one searched
     //adding the country to the final link to fetch
     /*********************************************/
     // Getting the data from the Covid API and saving it into our app component
     //https://api.covid19api.com/dayone/country/south-africa/status/confirmed/live
-    async componentDidMount(){
-        const nombrePais = this.gettingCountrySearched()
-        const url = `https://api.covid19api.com/dayone/country/${nombrePais}/status/confirmed/live`;
-        const response = await fetch(url);
-        const data = await response.json();
-        // console.log("Datos Confirmados", data[0].Cases)
-        this.setState({
-            mainDataBase: data,
-            isLoaded: true
-            })
-        this.updateState()
-        // this.gettingCountrySearched()
-    }
+
 
     
     
 
     //Fetching the Date of each day
     feedDataDateGraph = () => {
-
+        if(this.props.mainDataBase.length){
+            const dateBay = this.props.mainDataBase.map((element)=>{
+                return element.Date.substring(6,10);
+            })
+        }
         // fetching Date
-        return this.state.mainDataBase.map((element)=>{
-            //console.log('Each Date',element.Date);
-            return element.Date.substring(6,10);
-        })
+        
 
-        //console.log('this is total dates',dateDay)
+        console.log('this is total dates',this.dateDay)
     }
 
     //Fetching the Total cases confirmed per day
     feedDataCasesGraph = () => {
 
         // fetching Cases per day
-        return this.state.mainDataBase.map((element)=>{
+        return this.props.mainDataBase.map((element)=>{
             //console.log('Each Case',element.Cases);
             return element.Cases;
         })
@@ -111,7 +100,12 @@ class TimeSeries extends Component{
     }
 
 
+
     render(){
+        if(this.props.mainDataBase.length){
+        console.log("DB1",this.props.mainDataBase)
+        }
+        this.feedDataDateGraph()
         return(
             <div className="chart">
                 <Line

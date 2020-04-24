@@ -15,7 +15,9 @@ class MainArea extends Component {
             countryName: '',
             totalConfirmed: '',
             totalRecovered: '',
-            totalDeaths: ''
+            totalDeaths: '',
+            mainDataBase:[],
+            isLoaded2: false
         }
     }
 
@@ -46,8 +48,29 @@ class MainArea extends Component {
             this.updateCard(filteredCountry[0]);
             const FinalCountryChoosen = filteredCountry[0].Country;
             console.log('FinalCountryChoosen', FinalCountryChoosen)
+            
+            if(FinalCountryChoosen){
+                this.gettingCountrySearched(FinalCountryChoosen)
+            }
+            
+            }
+            
         }
+    
+
+
+    async gettingCountrySearched(FinalCountryChoosen){
+        const url = `https://api.covid19api.com/dayone/country/${FinalCountryChoosen}/status/confirmed/live`;
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log("Datos Confirmados", data)
+        this.setState({
+            mainDataBase: data,
+            isLoaded2: true
+            })
+        console.log("MAIN DATA BASE",this.state.mainDataBase)
     }
+
 
     clearSearchField = () => {this.setState({searchField:''})}
 
@@ -81,7 +104,7 @@ class MainArea extends Component {
                     <Cards updateCardTotalConfirmed={this.state.totalConfirmed}
                         updateCardTotalRecovered={this.state.totalRecovered}
                         updateCardTotalDeaths={this.state.totalDeaths}/>
-                    <TimeSeries updateTitle={this.onSearchChange}/>
+                    <TimeSeries mainDataBase={this.state.mainDataBase}/>
                 </div>
             )
         }
