@@ -1,11 +1,114 @@
-.option{
-    //background-color: ;
-    color:white;
+header{
 
-    &:visited{
-        color: white;
+    h1{
+        float: left;
     }
-    &:hover{
-        color: #7ebdb4;
+
+    .options{
+        max-height: 0;
+        overflow: hidden;
+        clear: both;
+        transition: max-height .2s ease-out;
+
+        @media (min-width: 768px) {
+            clear: none;
+            float: right;
+            max-height: none;
+        }
+
+        li{
+            list-style: none;
+            padding: 15px 10px;
+        }
+
     }
+
+    .option{
+        color:white;
+        &:visited{
+            color: white;
+        }
+        &:hover{
+            color: #7ebdb4;
+        }
+    }
+
+    .menu-icon {
+        cursor: pointer;
+        display: inline-block;
+        float: right;
+        padding: 28px 20px;
+        position: relative;
+        user-select: none;
+
+        @media (min-width: 768px) {
+            display: none;
+        }
+
+        .navicon {
+            background: #fff;
+            display: block;
+            height: 2px;
+            position: relative;
+            transition: background .2s ease-out;
+            width: 18px;
+
+            &::before,
+            &::after{
+                background: #fff;
+                content: '';
+                display: block;
+                height: 100%;
+                position: absolute;
+                transition: all .2s ease-out;
+                width: 100%;
+            }
+
+            &::before{
+                top: 5px;
+            }
+
+            &::after{
+                top: -5px;
+            }
+        }
+    }
+
+    .menu-btn {
+        display: none;
+
+        &:checked ~ .options {
+            max-height: 240px;
+        }
+
+        &:checked ~ .menu-icon .navicon {
+            background: transparent;
+        }
+
+        &:checked ~ .menu-icon .navicon:before {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+
+        &:checked ~ .menu-icon .navicon:after {
+            top: 0;
+            transform: rotate(45deg);
+        }
+    }
+
+    @media (min-width: 768px) {
+        li {
+            float: left;
+
+            a {
+                padding: 20px 30px;
+            }
+        }
+    }
+
+    @media (min-width: 959px) {
+        display: flex;
+        justify-content: space-between;
+    }
+
 }
