@@ -30,6 +30,7 @@ export const options = {
           }
         }
     },
+    responsive: true,
     legend: {
         position:'bottom',
         labels: {

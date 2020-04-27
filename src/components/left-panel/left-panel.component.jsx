@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {HorizontalBar} from 'react-chartjs-2';
 import {options} from '../../utils/chart.utils';
 
+import './left-panel.styles.scss';
+
 
 const LeftPanel = ({countries}) => {
     const dataSet = {
@@ -23,7 +25,7 @@ const LeftPanel = ({countries}) => {
     };
 
     return (
-        <div className='left-panel'>
+        <div className='left-panel column'>
             <HorizontalBar data={dataSet} options={options}/>
         </div>
     );

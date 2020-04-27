@@ -22,7 +22,7 @@ class RightPanel extends React.Component{
 
     fetchNewsData = async ()=>{
         const {updateNewsData} = this.props;
-        await axios.get(`https://cryptic-ravine-96718.herokuapp.com/`)
+        axios.get(`https://api.smartable.ai/coronavirus/news/global`,{ headers: { 'Subscription-Key': '3009d4ccc29e4808af1ccc25c69b4d5d' } })
         .then(response => {
             const newsData = response.data.news;
             updateNewsData(newsData);
@@ -35,15 +35,18 @@ class RightPanel extends React.Component{
     render(){
         const {news} = this.props;
 
-        return(<div className='right-panel'>
+        return(<div className='right-panel column'>
             <span className='trending-wrapper mt3'><i className='fa fa-bullhorn mr2 fa-2x v-mid' aria-hidden='true'></i><span className='trending-title f3'>Trending news</span></span>
             <div className='news-container'>
 
                 {
                     this.state.isLoading? <ReactLoading type='cubes' color='#7ebdb4' className='loader' />:
-                    (news.map((singleNews,index) => (
-                        <NewsItem key={index} title={singleNews.title} image={singleNews.img}  link={singleNews.link} />
-                    )))
+                    (news.map((singleNews,index) => {
+                        const newsImage = singleNews.images?singleNews.images[0].url:'';
+                        return (
+                            <NewsItem key={index} title={singleNews.title} image={newsImage}  link={singleNews.webUrl} />
+                        )
+                    }))
                 }
             </div>
         </div>)

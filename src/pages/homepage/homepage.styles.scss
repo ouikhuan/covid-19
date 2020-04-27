@@ -1,5 +1,16 @@
 .homepage{
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-auto-rows: 700px;
+    display: block;
+
+    @media (min-width: 1336px) {
+        .column{
+            float: left;
+        }
+        .left-panel,.right-panel{
+            width: 25%;
+        }
+
+        .main-area{
+            width: 50%;
+        }
+    }
 }

@@ -95,21 +95,25 @@ class MainArea extends Component {
     render() {
         const {countries, searchField,isLoaded} = this.state;
 
-        if (!isLoaded){
-            return <div>Loading...</div>;
-        }else{
-            return (
-                <div className='main-area'>
-                    <Title updateTitle={this.state.countryName}/>
-                    <SearchBox searchChange={this.onSearchChange}
-                        clearField={this.clearSearchField} searchValue={this.state.searchField} />
-                    <Cards updateCardTotalConfirmed={this.state.totalConfirmed}
-                        updateCardTotalRecovered={this.state.totalRecovered}
-                        updateCardTotalDeaths={this.state.totalDeaths}/>
-                    <TimeSeries mainDataBase={this.state.mainDataBase}/>
-                </div>
-            )
-        }
+
+        return (
+            <div className='main-area column'>
+                {
+                    isLoaded?
+                    <>
+                        <Title updateTitle={this.state.countryName}/>
+                        <SearchBox searchChange={this.onSearchChange}
+                            clearField={this.clearSearchField} searchValue={this.state.searchField} />
+                        <Cards updateCardTotalConfirmed={this.state.totalConfirmed}
+                            updateCardTotalRecovered={this.state.totalRecovered}
+                            updateCardTotalDeaths={this.state.totalDeaths}/>
+                        <TimeSeries mainDataBase={this.state.mainDataBase}/>
+                    </>
+                    :(<div>loading...</div>)
+
+                }
+            </div>
+        )
     }
 }
 
