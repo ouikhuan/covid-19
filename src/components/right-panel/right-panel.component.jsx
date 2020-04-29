@@ -22,7 +22,7 @@ class RightPanel extends React.Component{
 
     fetchNewsData = async ()=>{
         const {updateNewsData} = this.props;
-        axios.get(`https://api.smartable.ai/coronavirus/news/global`,{ headers: { 'Subscription-Key': '3009d4ccc29e4808af1ccc25c69b4d5d' } })
+        axios.get(`https://api.smartable.ai/coronavirus/news/global`,{ headers: { 'Subscription-Key': `${process.env.REACT_APP_SMARTABLE_KEY}` } })
         .then(response => {
             const newsData = response.data.news;
             updateNewsData(newsData);
