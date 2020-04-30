@@ -1,6 +1,5 @@
 import React from 'react';
 import './about.styles.scss';
-//import componentCard from './about.component.card';
 
 const About = ()=>(
     <div className='about flex justify-center items-center'>
