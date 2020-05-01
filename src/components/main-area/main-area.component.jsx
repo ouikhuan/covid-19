@@ -31,36 +31,43 @@ class MainArea extends Component {
             countries: data,
             isLoaded: true
             })
-        //console.log(data);
+        console.log("Summary data", data);
 
     }
 
     //Working with the SearchBox event
     onSearchChange = (event) => {
-        //console.log(event.target.value);
+        //console.log("Event Target",event.target.value);
         this.setState({ searchField: event.target.value })
+        //console.log("searchField state",this.state.searchField);
+        const filteredGlobal = this.state.countries.Global
+        
+        this.updateCardGlobal(filteredGlobal);
+        
+        console.log("Global!",filteredGlobal)
+
         const filteredCountry = this.state.countries.Countries
             .filter(name => {
                 return name.Country.toLowerCase() === event.target.value.toLowerCase();
             })
-
-        if(filteredCountry.length){
+        if(!filteredCountry.length){
+            this.updateCardGlobal(filteredGlobal);
+        }else{
+        //console.log("filteredCountry!",filteredCountry)
+        
             this.updateCard(filteredCountry[0]);
             const finalCountryChoosen = filteredCountry[0].Country;
-            console.log('finalCountryChoosen', finalCountryChoosen)
 
+            //Getting the data of the country choosen
             if(finalCountryChoosen){
                 this.gettingCountrySearched(finalCountryChoosen)
             }
-
         }
-
     }
 
 
 
     async gettingCountrySearched(finalCountryChoosen){
-        //const url = `https://api.covid19api.com/dayone/country/${finalCountryChoosen}/status/confirmed/live`;
         const url = `https://api.covid19api.com/total/dayone/country/${finalCountryChoosen}/status/confirmed`;
 
         const response = await fetch(url);
@@ -77,9 +84,21 @@ class MainArea extends Component {
     clearSearchField = () => {this.setState({searchField:''})}
 
 
-    //Working with the Card component
+    // Working with the Card component for Global data
+    updateCardGlobal = (filteredGlobal) => {
+        console.log('run here Global',filteredGlobal);
+        const {Global = 'Global', TotalConfirmed,TotalDeaths,TotalRecovered} = filteredGlobal;
+        this.setState({
+            countryName: Global,
+            totalConfirmed: TotalConfirmed,
+            totalRecovered: TotalRecovered,
+            totalDeaths: TotalDeaths
+        })
+    }
+    //Working with the Card component for countries data
+
     updateCard = (filteredCountry) => {
-        console.log('run here',filteredCountry);
+        console.log('run here Country',filteredCountry);
         const {Country, TotalConfirmed,TotalDeaths,TotalRecovered} = filteredCountry;
         this.setState({
             countryName: Country,

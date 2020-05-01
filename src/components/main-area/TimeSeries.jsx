@@ -2,13 +2,10 @@ import React, {Component} from 'react';
 import { Line } from 'react-chartjs-2';
 
 
-//<TimeSeries updateTitle={this.state.countryName}/>
-
 class TimeSeries extends Component{
     constructor(props){
         super(props);
         this.state = {
-            // mainDataBase: [],
             chartData: {
                 labels:[],
                 datasets:[
@@ -26,22 +23,9 @@ class TimeSeries extends Component{
             countryName: ''
 
         }
-        // console.log("PAIS RECIBIDO", this.props.updateTitle)
     }
 
-    // Getting the country searched
-    gettingCountrySearched = () => {
-        console.log("DB",this.props.mainDataBase)
-        //return 'peru'
 
-        // console.log("Nombre del PAIS",this.props.updateTitle)
-        // this.setState({
-        //     countryName: this.props.updateTitle
-        // },
-        // ()=>{
-
-        // })
-    }
 
     // }
     //matching the URL country with the one searched
