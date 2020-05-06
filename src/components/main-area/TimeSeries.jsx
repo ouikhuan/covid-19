@@ -9,7 +9,7 @@ class TimeSeries extends Component{
             chartData: {
                 labels:[],
                 datasets:[
-                    {
+                    {   globalDataBase:[],
                         data:[],
                         borderColor:[
                             '#f4a548'
@@ -25,21 +25,9 @@ class TimeSeries extends Component{
         }
     }
 
-
-
-    // }
-    //matching the URL country with the one searched
-    //adding the country to the final link to fetch
-    /*********************************************/
-    // Getting the data from the Covid API and saving it into our app component
-    //https://api.covid19api.com/dayone/country/south-africa/status/confirmed/live
-
-
-
-
-
+    //console.log()
     //Fetching the Date of each day
-    feedDataDateGraph = data => data.map((element)=>element.Date.substring(6,10));
+    feedDataDateGraph = data => data.map((element)=>element.Date.substring(5,10));
 
     //Fetching the Total cases confirmed per day
     feedDataCasesGraph = data => data.map((element)=> element.Cases);
@@ -59,17 +47,20 @@ class TimeSeries extends Component{
                 }]
             }
         })
-        console.log(finalLabels);
-        console.log("FINAL DATA",finalData);
-        console.log("LABELS",this.state.chartData.labels);
-        console.log("DATA",this.state.chartData.datasets);
+        // console.log(finalLabels);
+        // console.log("FINAL DATA",finalData);
+        // console.log("LABELS",this.state.chartData.labels);
+        // console.log("DATA",this.state.chartData.datasets);
     }
 
 
 
     render(){
-
+        const {globalDataBase} = this.props;
         const {mainDataBase} = this.props;
+        console.log("mainDataBase!!!",this.mainDataBase)
+        console.log('globalDataBase',this.globalDataBase);
+        //const globalDataBase = this.globalDataBase;
         const datesData = this.feedDataDateGraph(mainDataBase);
         const casesData = this.feedDataCasesGraph(mainDataBase);
         const chartData = {

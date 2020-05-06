@@ -17,13 +17,20 @@ class MainArea extends Component {
             totalRecovered: '',
             totalDeaths: '',
             mainDataBase:[],
-            isLoaded2: false
+            globalDataBase:[],
+            isLoaded2: false,
+            globalLoading: false
         }
     }
 
 
     // Getting the data from the Covid API and saving it into our app component
     async componentDidMount(){
+
+        this.gettingGlobalData();
+        // console.log('GLOBAL DATA FILTERED',filteredGlobal)
+
+        
         const url = 'https://api.covid19api.com/summary';
         const response = await fetch(url);
         const data = await response.json();
@@ -31,7 +38,7 @@ class MainArea extends Component {
             countries: data,
             isLoaded: true
             })
-        console.log("Summary data", data);
+        //console.log("Summary data", data);
 
     }
 
@@ -50,11 +57,7 @@ class MainArea extends Component {
             .filter(name => {
                 return name.Country.toLowerCase() === event.target.value.toLowerCase();
             })
-        if(!filteredCountry.length){
-            this.updateCardGlobal(filteredGlobal);
-        }else{
-        //console.log("filteredCountry!",filteredCountry)
-        
+        if(filteredCountry.length){
             this.updateCard(filteredCountry[0]);
             const finalCountryChoosen = filteredCountry[0].Country;
 
@@ -62,9 +65,52 @@ class MainArea extends Component {
             if(finalCountryChoosen){
                 this.gettingCountrySearched(finalCountryChoosen)
             }
+        }else{
+            this.gettingGlobalData();
         }
     }
 
+    //Getting global data summary
+    gettingGlobalData(){
+        
+        const url = "https://api.smartable.ai/coronavirus/stats/global";
+        fetch(url, {
+        method: "GET",
+        headers: {
+            'Subscription-Key': `${process.env.REACT_APP_SMARTABLE_KEY}`
+        }
+        
+        }).then(response => response.json())
+        //.then(data => this.data.text())
+        //.then(data => this.updateCardGlobal(data))
+        .then(data => data.stats)  
+        .then(data => {
+            //const data_summary = {data.TotalConfirmedCases, }
+            this.updateCardGlobal(data)
+            
+            console.log("GLOBAL DATA",data)
+
+            /* Getting the daily global values of confirmed cases and their dates */
+            let globalDataBD = [];
+            let globalDataBDdates = [];
+
+            for (let i = 0; i<data.history.length;i++){
+                globalDataBD = globalDataBD.concat(data.history[i].confirmed)                       /* Global Confirmed Cases */
+                globalDataBDdates = globalDataBDdates.concat(data.history[i].date.substring(5,10))  /* Global Confirmed Cases Dates*/
+            }
+
+            this.setState({
+                globalDataBase: globalDataBD
+            })
+            console.log("GLOBAL DATA HISTORY",data.history)
+            console.log("GLOBAL DATA BD ohhhhh",this.globalDataBase)
+            console.log("GLOBAL DATA BD",globalDataBD)
+            console.log("GLOBAL DATA BD date",globalDataBDdates)
+        })
+        //console.log("GLOBAL DATA",data.stats)
+        
+        
+    }
 
 
     async gettingCountrySearched(finalCountryChoosen){
@@ -81,18 +127,18 @@ class MainArea extends Component {
     }
 
 
-    clearSearchField = () => {this.setState({searchField:''})}
+    clearSearchField = () => {this.setState({searchField:''})} 
 
 
     // Working with the Card component for Global data
     updateCardGlobal = (filteredGlobal) => {
         console.log('run here Global',filteredGlobal);
-        const {Global = 'Global', TotalConfirmed,TotalDeaths,TotalRecovered} = filteredGlobal;
+        const {totalConfirmedCases,totalDeaths,totalRecoveredCases} = filteredGlobal;
         this.setState({
-            countryName: Global,
-            totalConfirmed: TotalConfirmed,
-            totalRecovered: TotalRecovered,
-            totalDeaths: TotalDeaths
+            // globalDataBase: history,
+            totalConfirmed: totalConfirmedCases,
+            totalRecovered: totalRecoveredCases,
+            totalDeaths: totalDeaths
         })
     }
     //Working with the Card component for countries data
@@ -112,9 +158,20 @@ class MainArea extends Component {
 
 
     render() {
-        const {countries, searchField,isLoaded} = this.state;
+        const {isLoaded} = this.state;
+        console.log("globalDataBase!!!",this.globalDataBase)
+        
+        //
+        //const {TotalConfirmedCases, TotalRecoveredCases, totalDeaths} = filteredGlobal;
+        //
+        // const filteredGlobal = this.gettingGlobalData();
+        // console.log('GLOBAL DATA FILTERED',filteredGlobal)
+        //
+        //this.updateCardGlobal(filteredGlobal);
+        //this.gettingGlobalData()
 
 
+        
         return (
             <div className='main-area column'>
                 {
@@ -126,7 +183,8 @@ class MainArea extends Component {
                         <Cards updateCardTotalConfirmed={this.state.totalConfirmed}
                             updateCardTotalRecovered={this.state.totalRecovered}
                             updateCardTotalDeaths={this.state.totalDeaths}/>
-                        <TimeSeries mainDataBase={this.state.mainDataBase}/>
+                        <TimeSeries mainDataBase={this.state.mainDataBase}
+                                    globalDataBase={this.state.globalDataBase}/>
                     </>
                     :(<div>loading...</div>)
 
